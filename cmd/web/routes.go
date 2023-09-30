@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -17,6 +18,10 @@ func routes(a *config.AppConfig) http.Handler {
 	mux.Use(LogEachApiHit)
 	mux.Use(NoSurf)
 	mux.Use(SessionLoad)
+
+	fs := http.FileServer(http.Dir("./static/"))
+	mux.Handle("/static/*", http.StripPrefix("/static", fs))
+	log.Println(fs)
 
 	mux = endPoints(mux)
 	return mux
