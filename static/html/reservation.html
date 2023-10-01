@@ -207,13 +207,15 @@
     <!--Include js for sweetalert2 for intrusive notifications-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+      //initialize prompt modules for usage
+      const alertUser = Prompt();
+
       // Example starter JavaScript for disabling form submissions if there are invalid fields
       (() => {
         "use strict";
 
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
         const forms = document.querySelectorAll(".needs-validation");
-
         // Loop over them and prevent submission
         Array.from(forms).forEach((form) => {
           form.addEventListener(
@@ -222,6 +224,9 @@
               if (!form.checkValidity()) {
                 event.preventDefault();
                 event.stopPropagation();
+                // alertUser.error({errlongText:"Check-in or Check-out dates not filled", msg:"Date is empty!"});
+                alertUser.toast({icon:"error", msg:"Date is empty!"});
+                // alertUser.success({});  
               }
 
               form.classList.add("was-validated");
@@ -243,30 +248,89 @@
       });
 
       // Initialize notie and call it
-      ((msg, type) => {
-        notie.alert({
-          type: type, // optional, default = 4, enum: [1, 2, 3, 4, 5, 'success', 'warning', 'error', 'info', 'neutral']
-          text: msg,
-          stay: false, // optional, default = false
-          time: 5, // optional, default = 3, minimum = 1,
-          position: "top", // optional, default = 'top', enum: ['top', 'bottom']
-        });
-      })("You are notified by notie!", 4);
+      // ((msg, type) => {
+      //   notie.alert({
+      //     type: type, // optional, default = 4, enum: [1, 2, 3, 4, 5, 'success', 'warning', 'error', 'info', 'neutral']
+      //     text: msg,
+      //     stay: false, // optional, default = false
+      //     time: 5, // optional, default = 3, minimum = 1,
+      //     position: "top", // optional, default = 'top', enum: ['top', 'bottom']
+      //   });
+      // })("You are notified by notie!", 4);
 
-      //Call sweetalert2
-      ((type, title, msg, footerHtml) => {
-        Swal.fire({
-          icon: type,
-          title: title,
-          text: msg,
-          footer: footerHtml,
-        });
-      })(
-        "info",
-        "Demo Sweetalert2",
-        "Hello, this is a plain text message!",
-        "<a href='https://sweetalert2.github.io/#examples' target='_blank'>Sweetalert2 examples</a>"
-      );
+      // //Call sweetalert2
+      // ((type, title, msg, footerHtml) => {
+      //   Swal.fire({
+      //     icon: type,
+      //     title: title,
+      //     text: msg,
+      //     footer: footerHtml,
+      //   });
+      // })(
+      //   "info",
+      //   "Demo Sweetalert2",
+      //   "Hello, this is a plain text message!",
+      //   "<a href='https://sweetalert2.github.io/#examples' target='_blank'>Sweetalert2 examples</a>"
+      // );
+
+      //Prompt modules: returns several functions such as success, error, and toast
+      function Prompt() {
+        let toast = function (c) {
+          const { msg = "Reservation accepted!", icon = "info" } = c;
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: icon,
+            title: msg,
+          });
+        };
+
+        let error = function (c) {
+          const {
+            title = "Error",
+            msg = "Operation failed! See long text below.",
+            errlongText = "",
+          } = c;
+
+          Swal.fire({
+            icon: "error",
+            title: title,
+            text: msg,
+            footer: errlongText,
+          });
+        };
+
+        let success = function (c) {
+          const {
+            title = "Success",
+            msg = "You did it!",
+            successlongText = "",
+          } = c;
+
+          Swal.fire({
+            icon: "success",
+            title: title,
+            text: msg,
+            footer: successlongText,
+          });
+        };
+
+        return {
+          toast: toast,
+          success: success,
+          error: error,
+        };
+      }
     </script>
   </body>
 </html>
