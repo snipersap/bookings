@@ -119,7 +119,7 @@
       </div>
       <div class="row">
         <div class="col-sm-1"></div>
-        <div class="col-sm">
+        <div class="col-sm-5">
           <form
             method="get"
             action="./reservation.html"
@@ -204,6 +204,8 @@
     <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/js/datepicker-full.min.js"></script>
     <!--Include js for notie-->
     <script src="https://unpkg.com/notie"></script>
+    <!--Include js for sweetalert2 for intrusive notifications-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
       // Example starter JavaScript for disabling form submissions if there are invalid fields
       (() => {
@@ -240,6 +242,7 @@
         allowOneSidedRange: true, //Each date range element is independently selectable of the other.
       });
 
+      // Initialize notie and call it
       ((msg, type) => {
         notie.alert({
           type: type, // optional, default = 4, enum: [1, 2, 3, 4, 5, 'success', 'warning', 'error', 'info', 'neutral']
@@ -248,7 +251,22 @@
           time: 5, // optional, default = 3, minimum = 1,
           position: "top", // optional, default = 'top', enum: ['top', 'bottom']
         });
-      })("You are notified by notie!",4);
+      })("You are notified by notie!", 4);
+
+      //Call sweetalert2
+      ((type, title, msg, footerHtml) => {
+        Swal.fire({
+          icon: type,
+          title: title,
+          text: msg,
+          footer: footerHtml,
+        });
+      })(
+        "info",
+        "Demo Sweetalert2",
+        "Hello, this is a plain text message!",
+        "<a href='https://sweetalert2.github.io/#examples' target='_blank'>Sweetalert2 examples</a>"
+      );
     </script>
   </body>
 </html>
