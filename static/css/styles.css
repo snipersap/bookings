@@ -1,0 +1,8 @@
+.page-footer {
+    height: 5em;
+    background-color: rgb(33, 37, 41);
+    color: white;
+    margin-top: 1.5em;
+    padding: 1em;
+    font-size: 80%;
+  }

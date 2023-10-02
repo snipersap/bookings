@@ -22,14 +22,16 @@
       type="text/css"
       href="https://unpkg.com/notie/dist/notie.min.css"
     />
+
+    <!--Include stylesheet for all pages-->
+    <link rel="stylesheet" type="text/css" href="../css/styles.css" />
+
     <style>
-      .page-footer {
-        height: 5em;
-        background-color: rgb(33, 37, 41);
-        color: white;
-        margin-top: 1.5em;
-        padding: 1em;
-        font-size: 80%;
+      /* .datepicker .datepicker-header .datepicker-main{
+        z-index: 1000;
+      } */
+      .swal2-actions {
+        z-index: auto;
       }
     </style>
   </head>
@@ -177,6 +179,13 @@
             <button type="submit" class="btn btn-primary">
               Search availability
             </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              id="quickSearch"
+            >
+              Quick search
+            </button>
           </form>
         </div>
       </div>
@@ -211,7 +220,7 @@
       const alertUser = Prompt();
 
       // Example starter JavaScript for disabling form submissions if there are invalid fields
-      (() => {
+      function initValidation() {
         "use strict";
 
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -225,8 +234,8 @@
                 event.preventDefault();
                 event.stopPropagation();
                 // alertUser.error({errlongText:"Check-in or Check-out dates not filled", msg:"Date is empty!"});
-                alertUser.toast({icon:"error", msg:"Date is empty!"});
-                // alertUser.success({});  
+                alertUser.toast({ icon: "error", msg: "Date is empty!" });
+                // alertUser.success({});
               }
 
               form.classList.add("was-validated");
@@ -234,7 +243,8 @@
             false
           );
         });
-      })();
+      }
+      initValidation();
 
       //Initialize datepicker and call it.
       const dateElem = document.querySelector("#reservationDates");
@@ -325,12 +335,117 @@
           });
         };
 
+        async function custom(c) {
+          const { msg = "", title = "" } = c;
+
+          const { value: formValues } = await Swal.fire({
+            title: title,
+            html: msg,
+            // icon: "info",
+            backdrop: true,
+            showCancelButton: true,
+            focusConfirm: true,
+            willOpen: () => {
+              const qSForm = document.getElementById("datesQuickSearch");
+              const qSDRP = new DateRangePicker(qSForm, {
+                format: "yyyy-mm-dd",
+                clearButton: true,
+                buttonClass: "btn btn-outline-primary", //Add bootstrap class to date range picker
+                todayHighlight: true, //highlight today's date
+                allowOneSidedRange: true, //Each date range element is independently selectable of the other.
+              });
+            },
+            didOpen: initValidation(),
+            preConfirm: () => {
+              return [
+                document.getElementById("startDate").value,
+                document.getElementById("endDate").value,
+              ];
+            },
+          });
+
+          if (formValues) {
+            Swal.fire(JSON.stringify(formValues));
+          }
+        }
+
         return {
           toast: toast,
           success: success,
           error: error,
+          custom: custom,
         };
       }
+
+      document.getElementById("quickSearch").addEventListener("click", () => {
+        let html = `
+                  <div class="container">
+                    <div class="row">
+                      <div class="col">
+                        <form
+                          method="post"
+                          action=""
+                          class="needs-validation"
+                          novalidate
+                        >
+                          <div class="row g2" id="datesQuickSearch">
+                            <div class="col mb-3">
+                              <label for="startDate" class="form-label col-form-label-lg"
+                                >Check-in</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="startDate"
+                                name="startDate"
+                                aria-describedby="startDateHelp"
+                                required
+                                aria-required="true"
+                                autocomplete="off"
+                                placeholder="YYYY-MM-DD"
+                              />
+                              <div id="startDateHelp" class="form-text visually-hidden">
+                                Provide your check-in date in the pattern of YYYY-MM-DD
+                              </div>
+                              <div class="valid-feedback">Valid check-in date.</div>
+                              <div class="invalid-feedback">
+                                Select a check-in date to search.
+                              </div>
+                            </div>
+                            <div class="col mb-3">
+                              <label for="endDate" class="form-label col-form-label-lg"
+                                >Check-out</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="endDate"
+                                name="endDate"
+                                aria-describedby="endDateHelp"
+                                required
+                                aria-required="true"
+                                autocomplete="off"
+                                placeholder="YYYY-MM-DD"
+                              />
+                              <div id="endDateHelp" class="form-text visually-hidden">
+                                Provide your check-out date in the pattern of YYYY-MM-DD
+                              </div>
+                              <div class="valid-feedback">Valid check-out date.</div>
+                              <div class="invalid-feedback">
+                                Select a check-out date to search.
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+        `;
+        alertUser.custom({
+          msg: html,
+          title: "Choose your length of stay ...",
+        });
+      });
     </script>
   </body>
 </html>
