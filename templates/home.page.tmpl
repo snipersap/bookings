@@ -1,14 +1,148 @@
 {{template "base" .}}
 
+{{define "title"}}
+    <title>Athithi Ashray</title>
+{{end}}
+
 {{define "content"}}
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>This is the Home page.</h1>
-                <p>You can go to the <a href="/about">About</a> page. </p>
-                <img src="/static/images/outside.png" height="600px"/>
-            </div>
+    <!-- Space for Carousel-->
+    <div
+      id="propertyPhotos"
+      class="carousel slide carousel-fade"
+      data-bs-ride="carousel"
+    >
+      <div class="carousel-indicators">
+        <button
+          type="button"
+          data-bs-target="#propertyPhotos"
+          data-bs-slide-to="0"
+          class="active"
+          aria-current="true"
+          aria-label="Slide 1"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#propertyPhotos"
+          data-bs-slide-to="1"
+          aria-label="Slide 2"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#propertyPhotos"
+          data-bs-slide-to="2"
+          aria-label="Slide 3"
+        ></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="10000">
+          <img
+            src="/static/images/outside.png"
+            class="d-block w-100"
+            alt="outside view of the vacation home"
+          />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Vacation in Paradise</h5>
+            <p>Set at the edge of the river Maui, wake up to paradise!</p>
+          </div>
         </div>
+        <div class="carousel-item" data-bs-interval="7000">
+          <img
+            src="/static/images/tray.png"
+            class="d-block w-100"
+            alt="coffee on a tray with chocolates"
+          />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Breakfast like never before!</h5>
+            <p>Enjoy royal breakfast in bed with your loved ones!</p>
+          </div>
+        </div>
+        <div class="carousel-item" data-bs-interval="7000">
+          <img
+            src="/static/images/woman-laptop.png"
+            class="d-block w-100"
+            alt="a woman sipping coffee with her laptop on the bed"
+          />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Comfort like home</h5>
+            <p>Rejoice, relax or simply sip you favourite coffee!</p>
+          </div>
+        </div>
+      </div>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#propertyPhotos"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#propertyPhotos"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    <!-- Main content-->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <h1 class="text-center mt-4">
+            Welcome to <strong>Athithi Ashray</strong>, your dream
+            <em>vacation</em> starts now!
+          </h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Leo
+            integer malesuada nunc vel risus. Ac tortor vitae purus faucibus
+            ornare suspendisse sed. Mauris vitae ultricies leo integer malesuada
+            nunc vel risus commodo. Cursus sit amet dictum sit amet justo donec
+            enim diam. Pharetra sit amet aliquam id diam maecenas ultricies mi.
+            Tellus integer feugiat scelerisque varius morbi. Cursus metus
+            aliquam eleifend mi in. Tincidunt praesent semper feugiat nibh. Eu
+            feugiat pretium nibh ipsum consequat nisl vel. Aliquam id diam
+            maecenas ultricies mi eget. Commodo nulla facilisi nullam vehicula
+            ipsum a arcu cursus. Phasellus egestas tellus rutrum tellus
+            pellentesque eu tincidunt. Suscipit tellus mauris a diam maecenas
+            sed enim ut sem. Non arcu risus quis varius quam quisque id. Aliquet
+            lectus proin nibh nisl condimentum. In hac habitasse platea dictumst
+            vestibulum. Eget arcu dictum varius duis at consectetur lorem. Arcu
+            vitae elementum curabitur vitae nunc sed. Fermentum leo vel orci
+            porta non pulvinar neque laoreet suspendisse.
+          </p>
+          <p>
+            Lectus urna duis convallis convallis tellus id interdum velit
+            laoreet. Libero id faucibus nisl tincidunt eget nullam. Augue lacus
+            viverra vitae congue. Eget nulla facilisi etiam dignissim. Lectus
+            urna duis convallis convallis tellus id interdum velit. Eget dolor
+            morbi non arcu risus quis varius quam. Mattis aliquam faucibus purus
+            in massa tempor nec. Sed velit dignissim sodales ut eu sem integer
+            vitae. Blandit libero volutpat sed cras. Sed enim ut sem viverra
+            aliquet eget sit. Diam sollicitudin tempor id eu nisl. Sodales neque
+            sodales ut etiam sit amet nisl purus in. Ultrices eros in cursus
+            turpis massa. Potenti nullam ac tortor vitae purus faucibus ornare.
+            Pharetra pharetra massa massa ultricies mi. Commodo odio aenean sed
+            adipiscing diam. Neque viverra justo nec ultrices dui sapien eget mi
+            proin. Imperdiet proin fermentum leo vel orci porta non. Urna neque
+            viverra justo nec.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col text-center">
+          <a href="/search-availability" class="btn btn-success"
+            >Reserve me now!</a
+          >
+        </div>
+      </div>
     </div>
 
 {{end}}

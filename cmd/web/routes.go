@@ -31,5 +31,12 @@ func routes(a *config.AppConfig) http.Handler {
 func endPoints(mux *chi.Mux) *chi.Mux {
 	mux.Get("/", handlers.Repo.Home)
 	mux.Get("/about", handlers.Repo.About)
+	mux.Get("/contact", handlers.Repo.Contact)
+	mux.Get("/make-reservation", handlers.Repo.MakeReservation)
+	mux.Get("/room-family-first", handlers.Repo.RoomFamilyFirst)
+	mux.Get("/room-romantic-getaway", handlers.Repo.RoomRomanticGetaway)
+	mux.Get("/room-royal-garden", handlers.Repo.RoomRoyalGarden)
+	mux.Get("/room-your-lady", handlers.Repo.RoomYourLady)
+	mux.Get("/room-your-majesty", handlers.Repo.RoomYourMajesty)
 	return mux
 }

@@ -10,8 +10,15 @@ import (
 )
 
 const (
-	homeTpl  = "home.page.tmpl"
-	aboutTpl = "about.page.tmpl"
+	homeTpl                = "home.page.tmpl"
+	aboutTpl               = "about.page.tmpl"
+	contactTpl             = "contact.page.tmpl"
+	makeReservationTpl     = "make-reservation.page.tmpl"
+	roomFamilyFTpl         = "room.familyfirst.page.tmpl"
+	roomRomanticGetawayTpl = "room.romanticgetaway.page.tmpl"
+	roomRoyalGardenTpl     = "room.royalgarden.page.tmpl"
+	roomYourLadyTpl        = "room.yourlady.page.tmpl"
+	roomYourMajestyTpl     = "room.yourmajesty.page.tmpl"
 )
 
 // Repo stores the pointer to a Repository
@@ -78,4 +85,81 @@ func (rp *Repository) dynContentAbout(r *http.Request) *models.TemplateData {
 	sMap["remote_Ip"] = rp.App.Session.GetString(r.Context(), "remote_Ip")
 	td := models.TemplateData{StringMap: sMap}
 	return &td
+}
+
+// Contact handles the about page with URL /about
+func (rp *Repository) Contact(w http.ResponseWriter, r *http.Request) {
+	td := &models.TemplateData{}
+	err := render.RenderTemplate(w, contactTpl, td)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+	} else {
+		log.Println("Rendered Contact")
+	}
+}
+
+// MakeReservation handles the about page with URL /about
+func (rp *Repository) MakeReservation(w http.ResponseWriter, r *http.Request) {
+	td := &models.TemplateData{}
+	err := render.RenderTemplate(w, makeReservationTpl, td)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+	} else {
+		log.Println("Rendered Make Reservation")
+	}
+}
+
+// RoomFamilyFirst handles the about page with URL /about
+func (rp *Repository) RoomFamilyFirst(w http.ResponseWriter, r *http.Request) {
+	td := &models.TemplateData{}
+	err := render.RenderTemplate(w, roomFamilyFTpl, td)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+	} else {
+		log.Println("Rendered Room Family First")
+	}
+}
+
+// RoomRomanticGetaway handles the about page with URL /about
+func (rp *Repository) RoomRomanticGetaway(w http.ResponseWriter, r *http.Request) {
+	td := &models.TemplateData{}
+	err := render.RenderTemplate(w, roomRomanticGetawayTpl, td)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+	} else {
+		log.Println("Rendered Room Romantic Getaway")
+	}
+}
+
+// RoomRoyalGarden handles the about page with URL /about
+func (rp *Repository) RoomRoyalGarden(w http.ResponseWriter, r *http.Request) {
+	td := &models.TemplateData{}
+	err := render.RenderTemplate(w, roomRoyalGardenTpl, td)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+	} else {
+		log.Println("Rendered Room Royal Garden")
+	}
+}
+
+// RoomYourLady handles the about page with URL /about
+func (rp *Repository) RoomYourLady(w http.ResponseWriter, r *http.Request) {
+	td := &models.TemplateData{}
+	err := render.RenderTemplate(w, roomYourLadyTpl, td)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+	} else {
+		log.Println("Rendered Room Your Lady")
+	}
+}
+
+// RoomYourMajesty handles the about page with URL /about
+func (rp *Repository) RoomYourMajesty(w http.ResponseWriter, r *http.Request) {
+	td := &models.TemplateData{}
+	err := render.RenderTemplate(w, roomYourMajestyTpl, td)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+	} else {
+		log.Println("Rendered Room Your Majesty")
+	}
 }

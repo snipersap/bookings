@@ -1,125 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About | Athithi Ashray</title>
-    <!-- Latest compiled and minified CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-    <!--Stylesheet for vanillajs-datepicker-->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/css/datepicker-bs5.min.css"
-    />
-    <!--notie stylesheet for user notification-->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://unpkg.com/notie/dist/notie.min.css"
-    />
+{{template "base" .}}
 
-    <!--Include stylesheet for all pages-->
-    <link rel="stylesheet" type="text/css" href="../css/styles.css" />
+{{define "title"}}
+    <title>Make Reservation | Athithi Ashray</title>
+{{end}}
 
-    <style>
-      /* .datepicker .datepicker-header .datepicker-main{
-        z-index: 1000;
-      } */
-      .swal2-actions {
-        z-index: auto;
-      }
-    </style>
-  </head>
-  <body>
-    <!--Navbar-->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="./index.html">Athithi Ashray</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="./index.html"
-                >Home</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./about.html">About</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Rooms
-              </a>
-              <ul class="dropdown-menu">
-                <li>
-                  <a class="dropdown-item" href="./room-your-majesty.html"
-                    >Your Majesty's Room!</a
-                  >
-                </li>
-                <li>
-                  <a class="dropdown-item" href="./room-your-lady.html"
-                    >Your Lady's Room!</a
-                  >
-                </li>
-                <li>
-                  <a class="dropdown-item" href="./room-family-first.html"
-                    >Family First</a
-                  >
-                </li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="./room-romantic-getaway.html"
-                    >Romantic Getaway</a
-                  >
-                </li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="./room-royal-garden.html"
-                    >Royal Garden</a
-                  >
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="./make-reservation.html"
-                >Book now</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./contact.html">Contact</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <!-- Main content-->
-    <div class="container">
+{{define "content"}}
+<!-- Main content-->
+    <div class="container-fluid">
       <div class="row">
         <div class="col-sm-2"></div>
         <div class="col-sm">
           <h1 class="mt-4">Make a Reservation</h1>
-          <p>Reservation Details</p>
+          <p class="form-label">Reservation Details</p>
         </div>
       </div>
       <div class="row">
@@ -127,7 +19,7 @@
         <div class="col-sm-8">
           <form
             method="post"
-            action="./make-reservation.html"
+            action="/make-reservation"
             class="needs-validation"
             novalidate
           >
@@ -225,39 +117,17 @@
                 </div>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary mt-3">
               Make Reservation
             </button>
           </form>
         </div>
       </div>
     </div>
-    <footer class="page-footer">
-      <div class="row">
-        <div class="col">Left</div>
-        <div class="col">Center</div>
-        <div class="col">Right</div>
-      </div>
-    </footer>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script
-      src="https://code.jquery.com/jquery-1.12.4.min.js"
-      integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
-      crossorigin="anonymous"
-    ></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
-    <!--Inlcude the vanillajs-datepicker-->
-    <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/js/datepicker-full.min.js"></script>
-    <!--Include js for notie-->
-    <script src="https://unpkg.com/notie"></script>
-    <!--Include js for sweetalert2 for intrusive notifications-->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
+{{end}}
+
+{{define "js"}}
+<script>
       //initialize prompt modules for usage
       const alertUser = Prompt();
 
@@ -291,7 +161,7 @@
       initValidation();
 
       //Initialize datepicker and call it.
-      const dateElem = document.querySelector("#reservationDates"); //TODO:change the id
+      const dateElem = document.querySelector("#reservation");
       const dateRangePicker = new DateRangePicker(dateElem, {
         format: "yyyy-mm-dd", //specify the date format
         clearButton: true, //Add the clear button
@@ -360,5 +230,4 @@
         };
       }
     </script>
-  </body>
-</html>
+{{end}}

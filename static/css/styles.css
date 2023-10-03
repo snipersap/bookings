@@ -1,3 +1,10 @@
+/* Make the Swal confirm or cancel buttons lower than the date picker */
+.swal2-actions {
+  z-index: auto;
+}
+
+
+/* page-footer defines the style of the footer in all pages  */
 .page-footer {
     height: 5em;
     background-color: rgb(33, 37, 41);
@@ -6,3 +13,4 @@
     padding: 1em;
     font-size: 80%;
   }
+
