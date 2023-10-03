@@ -102,7 +102,9 @@
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="./make-reservation.html">Book now</a>
+              <a class="nav-link active" href="./make-reservation.html"
+                >Book now</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link" href="./contact.html">Contact</a>
@@ -114,77 +116,117 @@
     <!-- Main content-->
     <div class="container">
       <div class="row">
-        <div class="col-sm-1"></div>
+        <div class="col-sm-2"></div>
         <div class="col-sm">
-          <h1 class="mt-4">Search for <strong>Availability</strong></h1>
+          <h1 class="mt-4">Make a Reservation</h1>
+          <p>Reservation Details</p>
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-5">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
           <form
-            method="get"
-            action="./reservation.html"
+            method="post"
+            action="./make-reservation.html"
             class="needs-validation"
             novalidate
           >
-            <div class="row g2" id="reservationDates">
-              <div class="col mb-3">
-                <label for="checkInDate" class="form-label col-form-label-lg"
-                  >Check-in</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="checkInDate"
-                  name="checkInDate"
-                  aria-describedby="checkInDateHelp"
-                  required
-                  aria-required="true"
-                  autocomplete="off"
-                  placeholder="YYYY-MM-DD"
-                />
-                <div id="checkInDateHelp" class="form-text visually-hidden">
-                  Provide your check-in date in the pattern of YYYY-MM-DD
-                </div>
-                <div class="valid-feedback">Valid check-in date.</div>
-                <div class="invalid-feedback">
-                  Select a check-in date to search.
+            <div class="row" id="reservation">
+              <div class="row">
+                <div class="col mb-3">
+                  <label for="firstName" class="form-label col-form-label-lg"
+                    >First Name</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="firstName"
+                    name="firstName"
+                    aria-describedby="firstNameHelp"
+                    required
+                    aria-required="true"
+                    autocomplete="off"
+                    placeholder="Your first name"
+                  />
+                  <div id="firstNameHelp" class="form-text visually-hidden">
+                    Provide your first name as given in your ID.
+                  </div>
+                  <div class="valid-feedback">Valid first name.</div>
+                  <div class="invalid-feedback">First name is empty.</div>
                 </div>
               </div>
-              <div class="col mb-3">
-                <label for="checkOutDate" class="form-label col-form-label-lg"
-                  >Check-out</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="checkOutDate"
-                  name="checkOutDate"
-                  aria-describedby="checkOutDateHelp"
-                  required
-                  aria-required="true"
-                  autocomplete="off"
-                  placeholder="YYYY-MM-DD"
-                />
-                <div id="checkOutDateHelp" class="form-text visually-hidden">
-                  Provide your check-out date in the pattern of YYYY-MM-DD
+              <div class="row">
+                <div class="col mb-3">
+                  <label for="lastName" class="form-label col-form-label-lg"
+                    >Last Name</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="lastName"
+                    name="lastName"
+                    aria-describedby="lastNameHelp"
+                    required
+                    aria-required="true"
+                    autocomplete="off"
+                    placeholder="Your last name"
+                  />
+                  <div id="lastNameHelp" class="form-text visually-hidden">
+                    Provide your last name as given in your ID.
+                  </div>
+                  <div class="valid-feedback">Valid last name.</div>
+                  <div class="invalid-feedback">Last name is empty.</div>
                 </div>
-                <div class="valid-feedback">Valid check-out date.</div>
-                <div class="invalid-feedback">
-                  Select a check-out date to search.
+              </div>
+              <div class="row">
+                <div class="col mb-3">
+                  <label for="email" class="form-label col-form-label-lg"
+                    >Email</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    aria-describedby="emailHelp"
+                    required
+                    aria-required="true"
+                    autocomplete="off"
+                    placeholder="Your email"
+                  />
+                  <div id="emailHelp" class="form-text visually-hidden">
+                    Provide your email to receive info.
+                  </div>
+                  <div class="valid-feedback">Valid email.</div>
+                  <div class="invalid-feedback">Email is empty.</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col mb-3">
+                  <label for="phone" class="form-label col-form-label-lg"
+                    >Phone</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="phone"
+                    name="phone"
+                    aria-describedby="phoneHelp"
+                    required
+                    aria-required="true"
+                    autocomplete="off"
+                    placeholder="Your Phonenumber"
+                  />
+                  <div id="phoneHelp" class="form-text visually-hidden">
+                    Provide your phone to be contacted for the reservation.
+                  </div>
+                  <div class="valid-feedback">Valid Phonenumber.</div>
+                  <div class="invalid-feedback">Phonenumber is empty.</div>
                 </div>
               </div>
             </div>
             <button type="submit" class="btn btn-primary">
-              Search availability
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-secondary"
-              id="quickSearch"
-            >
-              Quick search
+              Make Reservation
             </button>
           </form>
         </div>
@@ -234,10 +276,12 @@
                 event.preventDefault();
                 event.stopPropagation();
                 // alertUser.error({errlongText:"Check-in or Check-out dates not filled", msg:"Date is empty!"});
-                alertUser.toast({ icon: "error", msg: "Date is empty!" });
+                alertUser.toast({
+                  icon: "error",
+                  msg: "Please fill in all the details!",
+                });
                 // alertUser.success({});
               }
-
               form.classList.add("was-validated");
             },
             false
@@ -247,7 +291,7 @@
       initValidation();
 
       //Initialize datepicker and call it.
-      const dateElem = document.querySelector("#reservationDates");
+      const dateElem = document.querySelector("#reservationDates"); //TODO:change the id
       const dateRangePicker = new DateRangePicker(dateElem, {
         format: "yyyy-mm-dd", //specify the date format
         clearButton: true, //Add the clear button
@@ -256,32 +300,6 @@
         todayHighlight: true, //highlight today's date
         allowOneSidedRange: true, //Each date range element is independently selectable of the other.
       });
-
-      // Initialize notie and call it
-      // ((msg, type) => {
-      //   notie.alert({
-      //     type: type, // optional, default = 4, enum: [1, 2, 3, 4, 5, 'success', 'warning', 'error', 'info', 'neutral']
-      //     text: msg,
-      //     stay: false, // optional, default = false
-      //     time: 5, // optional, default = 3, minimum = 1,
-      //     position: "top", // optional, default = 'top', enum: ['top', 'bottom']
-      //   });
-      // })("You are notified by notie!", 4);
-
-      // //Call sweetalert2
-      // ((type, title, msg, footerHtml) => {
-      //   Swal.fire({
-      //     icon: type,
-      //     title: title,
-      //     text: msg,
-      //     footer: footerHtml,
-      //   });
-      // })(
-      //   "info",
-      //   "Demo Sweetalert2",
-      //   "Hello, this is a plain text message!",
-      //   "<a href='https://sweetalert2.github.io/#examples' target='_blank'>Sweetalert2 examples</a>"
-      // );
 
       //Prompt modules: returns several functions such as success, error, and toast
       function Prompt() {
@@ -335,117 +353,12 @@
           });
         };
 
-        async function custom(c) {
-          const { msg = "", title = "" } = c;
-
-          const { value: formValues } = await Swal.fire({
-            title: title,
-            html: msg,
-            // icon: "info",
-            backdrop: true,
-            showCancelButton: true,
-            focusConfirm: true,
-            willOpen: () => {
-              const qSForm = document.getElementById("datesQuickSearch");
-              const qSDRP = new DateRangePicker(qSForm, {
-                format: "yyyy-mm-dd",
-                clearButton: true,
-                buttonClass: "btn btn-outline-primary", //Add bootstrap class to date range picker
-                todayHighlight: true, //highlight today's date
-                allowOneSidedRange: true, //Each date range element is independently selectable of the other.
-              });
-            },
-            didOpen: initValidation(),
-            preConfirm: () => {
-              return [
-                document.getElementById("startDate").value,
-                document.getElementById("endDate").value,
-              ];
-            },
-          });
-
-          if (formValues) {
-            Swal.fire(JSON.stringify(formValues));
-          }
-        }
-
         return {
           toast: toast,
           success: success,
           error: error,
-          custom: custom,
         };
       }
-
-      document.getElementById("quickSearch").addEventListener("click", () => {
-        let html = `
-                  <div class="container">
-                    <div class="row">
-                      <div class="col">
-                        <form
-                          method="post"
-                          action=""
-                          class="needs-validation"
-                          novalidate
-                        >
-                          <div class="row g2" id="datesQuickSearch">
-                            <div class="col mb-3">
-                              <label for="startDate" class="form-label col-form-label-lg"
-                                >Check-in</label
-                              >
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="startDate"
-                                name="startDate"
-                                aria-describedby="startDateHelp"
-                                required
-                                aria-required="true"
-                                autocomplete="off"
-                                placeholder="YYYY-MM-DD"
-                              />
-                              <div id="startDateHelp" class="form-text visually-hidden">
-                                Provide your check-in date in the pattern of YYYY-MM-DD
-                              </div>
-                              <div class="valid-feedback">Valid check-in date.</div>
-                              <div class="invalid-feedback">
-                                Select a check-in date to search.
-                              </div>
-                            </div>
-                            <div class="col mb-3">
-                              <label for="endDate" class="form-label col-form-label-lg"
-                                >Check-out</label
-                              >
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="endDate"
-                                name="endDate"
-                                aria-describedby="endDateHelp"
-                                required
-                                aria-required="true"
-                                autocomplete="off"
-                                placeholder="YYYY-MM-DD"
-                              />
-                              <div id="endDateHelp" class="form-text visually-hidden">
-                                Provide your check-out date in the pattern of YYYY-MM-DD
-                              </div>
-                              <div class="valid-feedback">Valid check-out date.</div>
-                              <div class="invalid-feedback">
-                                Select a check-out date to search.
-                              </div>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-        `;
-        alertUser.custom({
-          msg: html,
-          title: "Choose your length of stay ...",
-        });
-      });
     </script>
   </body>
 </html>
