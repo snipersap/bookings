@@ -1,0 +1,323 @@
+{{template "base" .}}
+
+{{define "title"}}
+    <title>Search Availability | Athithi Ashray</title>
+{{end}}
+
+{{define "content"}}
+<!-- Main content-->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm">
+          <h1 class="mt-4">Search for <strong>Availability</strong></h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-5">
+          <form
+            method="post"
+            action="/search-availability"
+            class="needs-validation"
+            novalidate
+          >
+            <input id="csrf_token" name="csrf_token" type="hidden" value="{{.CSRFToken}}"/>
+            <div class="row g2" id="reservationDates">
+              <div class="col mb-3">
+                <label for="checkInDate" class="form-label col-form-label-lg"
+                  >Check-in</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="checkInDate"
+                  name="checkInDate"
+                  aria-describedby="checkInDateHelp"
+                  required
+                  aria-required="true"
+                  autocomplete="off"
+                  placeholder="YYYY-MM-DD"
+                />
+                <div id="checkInDateHelp" class="form-text visually-hidden">
+                  Provide your check-in date in the pattern of YYYY-MM-DD
+                </div>
+                <div class="valid-feedback">Valid check-in date.</div>
+                <div class="invalid-feedback">
+                  Select a check-in date to search.
+                </div>
+              </div>
+              <div class="col mb-3">
+                <label for="checkOutDate" class="form-label col-form-label-lg"
+                  >Check-out</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="checkOutDate"
+                  name="checkOutDate"
+                  aria-describedby="checkOutDateHelp"
+                  required
+                  aria-required="true"
+                  autocomplete="off"
+                  placeholder="YYYY-MM-DD"
+                />
+                <div id="checkOutDateHelp" class="form-text visually-hidden">
+                  Provide your check-out date in the pattern of YYYY-MM-DD
+                </div>
+                <div class="valid-feedback">Valid check-out date.</div>
+                <div class="invalid-feedback">
+                  Select a check-out date to search.
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              Search availability
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              id="quickSearch"
+            >
+              Quick search
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+{{end}}
+
+{{define "js"}}
+<script>
+      //initialize prompt modules for usage
+      const alertUser = Prompt();
+
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      function initValidation() {
+        "use strict";
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll(".needs-validation");
+        // Loop over them and prevent submission
+        Array.from(forms).forEach((form) => {
+          form.addEventListener(
+            "submit",
+            (event) => {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+                // alertUser.error({errlongText:"Check-in or Check-out dates not filled", msg:"Date is empty!"});
+                alertUser.toast({ icon: "error", msg: "Date is empty!" });
+                // alertUser.success({});
+              }
+
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      }
+      initValidation();
+
+      //Initialize datepicker and call it.
+      const dateElem = document.querySelector("#reservationDates");
+      const dateRangePicker = new DateRangePicker(dateElem, {
+        format: "yyyy-mm-dd", //specify the date format
+        clearButton: true, //Add the clear button
+        // autohide: true,
+        buttonClass: "btn btn-outline-primary", //Add bootstrap class to date range picker
+        todayHighlight: true, //highlight today's date
+        allowOneSidedRange: true, //Each date range element is independently selectable of the other.
+      });
+
+      // Initialize notie and call it
+      // ((msg, type) => {
+      //   notie.alert({
+      //     type: type, // optional, default = 4, enum: [1, 2, 3, 4, 5, 'success', 'warning', 'error', 'info', 'neutral']
+      //     text: msg,
+      //     stay: false, // optional, default = false
+      //     time: 5, // optional, default = 3, minimum = 1,
+      //     position: "top", // optional, default = 'top', enum: ['top', 'bottom']
+      //   });
+      // })("You are notified by notie!", 4);
+
+      // //Call sweetalert2
+      // ((type, title, msg, footerHtml) => {
+      //   Swal.fire({
+      //     icon: type,
+      //     title: title,
+      //     text: msg,
+      //     footer: footerHtml,
+      //   });
+      // })(
+      //   "info",
+      //   "Demo Sweetalert2",
+      //   "Hello, this is a plain text message!",
+      //   "<a href='https://sweetalert2.github.io/#examples' target='_blank'>Sweetalert2 examples</a>"
+      // );
+
+      //Prompt modules: returns several functions such as success, error, and toast
+      function Prompt() {
+        let toast = function (c) {
+          const { msg = "Reservation accepted!", icon = "info" } = c;
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: icon,
+            title: msg,
+          });
+        };
+
+        let error = function (c) {
+          const {
+            title = "Error",
+            msg = "Operation failed! See long text below.",
+            errlongText = "",
+          } = c;
+
+          Swal.fire({
+            icon: "error",
+            title: title,
+            text: msg,
+            footer: errlongText,
+          });
+        };
+
+        let success = function (c) {
+          const {
+            title = "Success",
+            msg = "You did it!",
+            successlongText = "",
+          } = c;
+
+          Swal.fire({
+            icon: "success",
+            title: title,
+            text: msg,
+            footer: successlongText,
+          });
+        };
+
+        async function custom(c) {
+          const { msg = "", title = "" } = c;
+
+          const { value: formValues } = await Swal.fire({
+            title: title,
+            html: msg,
+            // icon: "info",
+            backdrop: true,
+            showCancelButton: true,
+            focusConfirm: true,
+            willOpen: () => {
+              const qSForm = document.getElementById("datesQuickSearch");
+              const qSDRP = new DateRangePicker(qSForm, {
+                format: "yyyy-mm-dd",
+                clearButton: true,
+                buttonClass: "btn btn-outline-primary", //Add bootstrap class to date range picker
+                todayHighlight: true, //highlight today's date
+                allowOneSidedRange: true, //Each date range element is independently selectable of the other.
+              });
+            },
+            didOpen: initValidation(),
+            preConfirm: () => {
+              return [
+                document.getElementById("startDate").value,
+                document.getElementById("endDate").value,
+              ];
+            },
+          });
+
+          if (formValues) {
+            Swal.fire(JSON.stringify(formValues));
+          }
+        }
+
+        return {
+          toast: toast,
+          success: success,
+          error: error,
+          custom: custom,
+        };
+      }
+
+      document.getElementById("quickSearch").addEventListener("click", () => {
+        let html = `
+                  <div class="container">
+                    <div class="row">
+                      <div class="col">
+                        <form
+                          method="post"
+                          action=""
+                          class="needs-validation"
+                          novalidate
+                        >
+                          <div class="row g2" id="datesQuickSearch">
+                            <div class="col mb-3">
+                              <label for="startDate" class="form-label col-form-label-lg"
+                                >Check-in</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="startDate"
+                                name="startDate"
+                                aria-describedby="startDateHelp"
+                                required
+                                aria-required="true"
+                                autocomplete="off"
+                                placeholder="YYYY-MM-DD"
+                              />
+                              <div id="startDateHelp" class="form-text visually-hidden">
+                                Provide your check-in date in the pattern of YYYY-MM-DD
+                              </div>
+                              <div class="valid-feedback">Valid check-in date.</div>
+                              <div class="invalid-feedback">
+                                Select a check-in date to search.
+                              </div>
+                            </div>
+                            <div class="col mb-3">
+                              <label for="endDate" class="form-label col-form-label-lg"
+                                >Check-out</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="endDate"
+                                name="endDate"
+                                aria-describedby="endDateHelp"
+                                required
+                                aria-required="true"
+                                autocomplete="off"
+                                placeholder="YYYY-MM-DD"
+                              />
+                              <div id="endDateHelp" class="form-text visually-hidden">
+                                Provide your check-out date in the pattern of YYYY-MM-DD
+                              </div>
+                              <div class="valid-feedback">Valid check-out date.</div>
+                              <div class="invalid-feedback">
+                                Select a check-out date to search.
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+        `;
+        alertUser.custom({
+          msg: html,
+          title: "Choose your length of stay ...",
+        });
+      });
+    </script>
+{{end}}

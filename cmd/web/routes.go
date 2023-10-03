@@ -19,12 +19,17 @@ func routes(a *config.AppConfig) http.Handler {
 	mux.Use(NoSurf)
 	mux.Use(SessionLoad)
 
-	fs := http.FileServer(http.Dir("./static/"))
-	mux.Handle("/static/*", http.StripPrefix("/static", fs))
-	log.Println(fs)
+	fileServer(mux)
 
 	mux = endPoints(mux)
 	return mux
+}
+
+// fileServer serves the files in the /static/ folder
+func fileServer(mux *chi.Mux) {
+	fs := http.FileServer(http.Dir("./static/"))
+	mux.Handle("/static/*", http.StripPrefix("/static", fs))
+	log.Println(fs)
 }
 
 // endPoints returns routes of the app
@@ -38,5 +43,7 @@ func endPoints(mux *chi.Mux) *chi.Mux {
 	mux.Get("/room-royal-garden", handlers.Repo.RoomRoyalGarden)
 	mux.Get("/room-your-lady", handlers.Repo.RoomYourLady)
 	mux.Get("/room-your-majesty", handlers.Repo.RoomYourMajesty)
+	mux.Get("/search-availability", handlers.Repo.SearchAvailability)
+	mux.Post("/search-availability", handlers.Repo.PostSearchAvailability)
 	return mux
 }

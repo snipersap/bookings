@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -19,6 +20,7 @@ const (
 	roomRoyalGardenTpl     = "room.royalgarden.page.tmpl"
 	roomYourLadyTpl        = "room.yourlady.page.tmpl"
 	roomYourMajestyTpl     = "room.yourmajesty.page.tmpl"
+	SearchAvailabilityTpl  = "search-availability.page.tmpl"
 )
 
 // Repo stores the pointer to a Repository
@@ -47,7 +49,7 @@ func (rp *Repository) Home(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	err := render.RenderTemplate(w, homeTpl, &models.TemplateData{})
+	err := render.RenderTemplate(w, r, homeTpl, &models.TemplateData{})
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 	} else {
@@ -70,7 +72,7 @@ func isURLPathHome(r *http.Request) bool {
 func (rp *Repository) About(w http.ResponseWriter, r *http.Request) {
 
 	td := rp.dynContentAbout(r)
-	err := render.RenderTemplate(w, aboutTpl, td) //Using .html notation to use Emmet abbreviations in VS Code
+	err := render.RenderTemplate(w, r, aboutTpl, td) //Using .html notation to use Emmet abbreviations in VS Code
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 	} else {
@@ -90,7 +92,7 @@ func (rp *Repository) dynContentAbout(r *http.Request) *models.TemplateData {
 // Contact handles the about page with URL /about
 func (rp *Repository) Contact(w http.ResponseWriter, r *http.Request) {
 	td := &models.TemplateData{}
-	err := render.RenderTemplate(w, contactTpl, td)
+	err := render.RenderTemplate(w, r, contactTpl, td)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 	} else {
@@ -101,7 +103,7 @@ func (rp *Repository) Contact(w http.ResponseWriter, r *http.Request) {
 // MakeReservation handles the about page with URL /about
 func (rp *Repository) MakeReservation(w http.ResponseWriter, r *http.Request) {
 	td := &models.TemplateData{}
-	err := render.RenderTemplate(w, makeReservationTpl, td)
+	err := render.RenderTemplate(w, r, makeReservationTpl, td)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 	} else {
@@ -112,7 +114,7 @@ func (rp *Repository) MakeReservation(w http.ResponseWriter, r *http.Request) {
 // RoomFamilyFirst handles the about page with URL /about
 func (rp *Repository) RoomFamilyFirst(w http.ResponseWriter, r *http.Request) {
 	td := &models.TemplateData{}
-	err := render.RenderTemplate(w, roomFamilyFTpl, td)
+	err := render.RenderTemplate(w, r, roomFamilyFTpl, td)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 	} else {
@@ -123,7 +125,7 @@ func (rp *Repository) RoomFamilyFirst(w http.ResponseWriter, r *http.Request) {
 // RoomRomanticGetaway handles the about page with URL /about
 func (rp *Repository) RoomRomanticGetaway(w http.ResponseWriter, r *http.Request) {
 	td := &models.TemplateData{}
-	err := render.RenderTemplate(w, roomRomanticGetawayTpl, td)
+	err := render.RenderTemplate(w, r, roomRomanticGetawayTpl, td)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 	} else {
@@ -134,7 +136,7 @@ func (rp *Repository) RoomRomanticGetaway(w http.ResponseWriter, r *http.Request
 // RoomRoyalGarden handles the about page with URL /about
 func (rp *Repository) RoomRoyalGarden(w http.ResponseWriter, r *http.Request) {
 	td := &models.TemplateData{}
-	err := render.RenderTemplate(w, roomRoyalGardenTpl, td)
+	err := render.RenderTemplate(w, r, roomRoyalGardenTpl, td)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 	} else {
@@ -145,7 +147,7 @@ func (rp *Repository) RoomRoyalGarden(w http.ResponseWriter, r *http.Request) {
 // RoomYourLady handles the about page with URL /about
 func (rp *Repository) RoomYourLady(w http.ResponseWriter, r *http.Request) {
 	td := &models.TemplateData{}
-	err := render.RenderTemplate(w, roomYourLadyTpl, td)
+	err := render.RenderTemplate(w, r, roomYourLadyTpl, td)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 	} else {
@@ -156,10 +158,29 @@ func (rp *Repository) RoomYourLady(w http.ResponseWriter, r *http.Request) {
 // RoomYourMajesty handles the about page with URL /about
 func (rp *Repository) RoomYourMajesty(w http.ResponseWriter, r *http.Request) {
 	td := &models.TemplateData{}
-	err := render.RenderTemplate(w, roomYourMajestyTpl, td)
+	err := render.RenderTemplate(w, r, roomYourMajestyTpl, td)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 	} else {
 		log.Println("Rendered Room Your Majesty")
 	}
+}
+
+// SearchAvailability handles the about page with URL /about
+func (rp *Repository) SearchAvailability(w http.ResponseWriter, r *http.Request) {
+	td := &models.TemplateData{}
+	err := render.RenderTemplate(w, r, SearchAvailabilityTpl, td)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+	} else {
+		log.Println("Rendered Search Availability")
+	}
+}
+
+// PostSearchAvailability handles the about page with URL /about
+func (rp *Repository) PostSearchAvailability(w http.ResponseWriter, r *http.Request) {
+	checkinDate := r.Form.Get("checkInDate")
+	checkoutDate := r.Form.Get("checkOutDate")
+	// w.Write([]byte("From " + checkinDate + " to " + checkoutDate))
+	w.Write([]byte(fmt.Sprintf("Check-in date is %s and Check-out date is %s", checkinDate, checkoutDate)))
 }

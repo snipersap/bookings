@@ -10,13 +10,14 @@ import (
 	"net/http"
 	"path/filepath"
 
+	"github.com/justinas/nosurf"
 	"github.com/snipersap/bookings/pkg/config"
 	"github.com/snipersap/bookings/pkg/models"
 )
 
 // RenderTemplate takes the name of the template as input and writes the parsed
 // output from templates and layouts to the response writer
-func RenderTemplate(w http.ResponseWriter, tName string, td *models.TemplateData) error {
+func RenderTemplate(w http.ResponseWriter, r *http.Request, tName string, td *models.TemplateData) error {
 
 	//get parsed template
 	t, err := getParsedTemplate(tName)
@@ -25,7 +26,7 @@ func RenderTemplate(w http.ResponseWriter, tName string, td *models.TemplateData
 	}
 
 	// Placeholder for adding some default data before writing the response
-	td = addDefaultData(td)
+	td = addDefaultData(td, r)
 
 	//Using the buffer to write to response instead of directly writing it
 	buf := new(bytes.Buffer)
@@ -42,10 +43,13 @@ func RenderTemplate(w http.ResponseWriter, tName string, td *models.TemplateData
 	return nil
 }
 
-func addDefaultData(td *models.TemplateData) *models.TemplateData {
+// addDefaultData adds default data such as CSRFToken to the template data
+func addDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
+	td.CSRFToken = nosurf.Token(r)
 	return td
 }
 
+// getParsedTemplate retrieves the parsed template and layout for a given template
 func getParsedTemplate(tName string) (*template.Template, error) {
 	var tc map[string]*template.Template
 	var err error
